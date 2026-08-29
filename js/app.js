@@ -52,6 +52,8 @@ document.addEventListener('contextmenu', (e) => e.preventDefault());
 
 // Kopyalama, kəsmə və sürükləmə hadisələrini bloklayır
 document.addEventListener('copy', (e) => e.preventDefault());
+document.addEventListener('cut', (e) => e.preventDefault());
+document.addEventListener('dragstart', (e) => e.preventDefault());
 
 // Klaviatura qısayollarını bloklayır (Save, Copy, Print)
 document.addEventListener('keydown', (e) => {

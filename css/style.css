@@ -87,7 +87,7 @@
 
 /* Şəkil və videoların yaddaşa vurulmasını bloklayır */
 img, video {
-  pointer-events: none !important; /* Klikləri ləğv edir */
+  /* pointer-events: none !important; Klikləri ləğv edir */
   -webkit-user-drag: none !important; /* Sürükləyib götürməyi bağlayır */
   user-drag: none !important;
 }

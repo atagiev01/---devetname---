@@ -11,6 +11,7 @@ import { db, INVITATION_COLLECTION, INVITATION_DOC_ID } from "./firebase-config.
 import { DEFAULT_DATA } from "./default-data.js";
 import { buildPageHTML } from "./render.js";
 import { attachBehavior } from "./behavior.js";
+
 const appRoot = document.getElementById("app");
 const loadingScreen = document.getElementById("app-loading");
 
@@ -29,7 +30,21 @@ function render(data) {
     loadingScreen?.classList.add("is-hidden");
   }
 }
+// Sağ klik menyusunu bağlayır
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
 
+  // Qısayol düymələrini (F12, Ctrl+Shift+I, Ctrl+U və s.) bloklayır
+  document.addEventListener('keydown', (e) => {
+    if (
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+      (e.ctrlKey && e.key === 'U') ||
+      (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'J' || e.key === 'U')) // Mac üçün
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  });
 // İlk anda boş görünməsin deyə defolt data ilə göstəririk,
 // Firestore cavab verən kimi üzərinə yazılır.
 render(DEFAULT_DATA);

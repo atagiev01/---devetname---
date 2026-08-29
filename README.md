@@ -172,3 +172,4 @@ data/firestore-document.json   ← nümunə/seed sənəd
 scripts/upload-seed.js         ← seed sənədi Firestore-a yükləyən skript
 ```
 # ---devetname---
+# ---devetname---

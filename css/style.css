@@ -74,6 +74,25 @@
 }
 
 
+/* Bütün sayt üzrə kopyalama və seçməni söndürür */
+*, *::before, *::after {
+  -webkit-user-select: none !important; /* Safari */
+  -moz-user-select: none !important;    /* Firefox */
+  -ms-user-select: none !important;     /* IE/Edge */
+  user-select: none !important;         /* Standart */
+  
+  /* Mobil brauzerlərdə uzun basıb saxlayanda açılan menyunu bağlayır */
+  -webkit-touch-callout: none !important;
+}
+
+/* Şəkil və videoların yaddaşa vurulmasını bloklayır */
+img, video {
+  pointer-events: none !important; /* Klikləri ləğv edir */
+  -webkit-user-drag: none !important; /* Sürükləyib götürməyi bağlayır */
+  user-drag: none !important;
+}
+
+
 
 
 

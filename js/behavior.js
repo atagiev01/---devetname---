@@ -227,59 +227,47 @@ function setupMusicToggle(){
 }
 
 
+export function setupHeroParallax() {
+  const container = document.querySelector(".invitation-card") || document.getElementById("slider-container");
+  const hero = document.getElementById("hero");
+  const heroContent = document.getElementById("parallax-hero") || document.querySelector(".hero-content");
+  const heroVideo = document.querySelector(".hero-video");
 
+  if (!container || !hero || !heroContent || !heroVideo) return;
 
-function setupParallax() {
-  try {
-    const hero = document.getElementById("hero");
-    const heroContent = document.getElementById("parallax-hero") || document.querySelector(".hero-content");
-    const heroVideo = document.querySelector(".hero-video");
+  // Hündürlüyü skroldan KƏNARDA bir dəfə oxuyuruq (Mobil CPU-nu azad edir)
+  let heroHeight = hero.clientHeight;
+  window.addEventListener("resize", () => {
+    heroHeight = hero.clientHeight;
+  }, { passive: true });
 
-    // Skroll konteynerini tapırıq
-    const scrollContainer =
-      document.querySelector(".invitation-card") ||
-      document.getElementById("slider-container") ||
-      window;
+  let ticking = false;
 
-    if (!hero || !heroContent || !heroVideo) return;
+  function updateParallax() {
+    const scrollY = container.scrollTop || window.scrollY;
 
-    let ticking = false;
+    if (scrollY <= heroHeight) {
+      // Dəyərləri azaldırıq ki, mobil GPU rahat işləsin
+      const videoY = (scrollY * 0.25).toFixed(1);
+      const contentY = (scrollY * 0.12).toFixed(1);
+      const opacity = Math.max(1 - scrollY / (heroHeight * 0.7), 0).toFixed(2);
+      const scale = Math.max(1 - scrollY * 0.0001, 0.94).toFixed(3);
 
-    function updateParallax() {
-      const scrollY =
-        scrollContainer === window
-          ? window.scrollY
-          : scrollContainer.scrollTop;
-
-      const heroHeight = hero.offsetHeight;
-
-      if (scrollY <= heroHeight) {
-        const videoY = scrollY * 0.35;
-        const contentY = scrollY * 0.15;
-        const opacity = Math.max(1 - scrollY / (heroHeight * 0.75), 0);
-        const scale = Math.max(1 - scrollY * 0.00015, 0.92);
-
-        heroVideo.style.transform = `translate3d(0, ${videoY}px, 0)`;
-        heroContent.style.transform = `translate3d(0, ${contentY}px, 0) scale(${scale})`;
-        heroContent.style.opacity = opacity;
-      }
-
-      ticking = false;
+      // GPU təbəqəsindən istifadə edirik
+      heroVideo.style.transform = `translate3d(0, ${videoY}px, 0)`;
+      heroContent.style.transform = `translate3d(0, ${contentY}px, 0) scale(${scale})`;
+      heroContent.style.opacity = opacity;
     }
 
-    scrollContainer.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          window.requestAnimationFrame(updateParallax);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-
-    updateParallax();
-  } catch (error) {
-    console.warn("Parallaks başladılarkən xəta yarandı, lakin səhifə davam edir:", error);
+    ticking = false;
   }
+
+  container.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateParallax();
 }

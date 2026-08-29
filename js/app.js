@@ -11,7 +11,6 @@ import { db, INVITATION_COLLECTION, INVITATION_DOC_ID } from "./firebase-config.
 import { DEFAULT_DATA } from "./default-data.js";
 import { buildPageHTML } from "./render.js";
 import { attachBehavior } from "./behavior.js";
-
 const appRoot = document.getElementById("app");
 const loadingScreen = document.getElementById("app-loading");
 

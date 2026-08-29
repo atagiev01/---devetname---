@@ -52,18 +52,22 @@ document.addEventListener('contextmenu', (e) => e.preventDefault());
 
 // Kopyalama, kəsmə və sürükləmə hadisələrini bloklayır
 document.addEventListener('copy', (e) => e.preventDefault());
-document.addEventListener('cut', (e) => e.preventDefault());
-document.addEventListener('dragstart', (e) => e.preventDefault());
 
-document.addEventListener('contextmenu', (e) => {
-  e.preventDefault();
-  return false;
-});
-
-// Şəkilləri sürükləyib masaüstünə atmağı bağlayır
-document.addEventListener('dragstart', (e) => {
-  e.preventDefault();
-  return false;
+// Klaviatura qısayollarını bloklayır (Save, Copy, Print)
+document.addEventListener('keydown', (e) => {
+  if (
+    // Save (Ctrl+S / Cmd+S)
+    (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's') ||
+    // Copy (Ctrl+C / Cmd+C)
+    (e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c') ||
+    // Print (Ctrl+P / Cmd+P)
+    (e.ctrlKey && e.key === 'p') || (e.metaKey && e.key === 'p') ||
+    // DevTools & Source view
+    e.key === 'F12' || (e.ctrlKey && e.key === 'u') || (e.metaKey && e.key === 'u')
+  ) {
+    e.preventDefault();
+    return false;
+  }
 });
 // İlk anda boş görünməsin deyə defolt data ilə göstəririk,
 // Firestore cavab verən kimi üzərinə yazılır.

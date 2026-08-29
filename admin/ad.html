@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — Toy Dəvətnaməsi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+  rel="stylesheet"
+>
+
+<style>
+
+:root{
+  --gold:#b98b4e;
+  --brown:#4a320c;
+  --cream:#fbf5ef;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--cream);
+  color:var(--brown);
+  font-family:"Cormorant Garamond",serif;
+  padding:24px;
+}
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+}
+
+h1{
+  font-weight:600;
+  font-size:28px;
+  margin-bottom:4px;
+}
+
+.sub{
+  color:#8c6a32;
+  margin-bottom:28px;
+  font-size:15px;
+}
+
+/* LOGIN */
+
+#login-box{
+  max-width:360px;
+  margin:80px auto;
+  background:#fff;
+  border:1px solid rgba(181,142,80,.35);
+  border-radius:16px;
+  padding:32px 26px;
+  box-shadow:0 15px 45px rgba(74,56,34,.12);
+}
+
+#login-box h2{
+  margin:0 0 18px;
+  font-size:22px;
+  text-align:center;
+}
+
+/* FORM */
+
+fieldset{
+  border:1px solid rgba(181,142,80,.35);
+  border-radius:14px;
+  padding:18px 20px 22px;
+  margin-bottom:20px;
+  background:#fff;
+}
+
+legend{
+  padding:0 8px;
+  font-weight:600;
+  color:#8c6a32;
+  letter-spacing:.04em;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  color:#8c6a32;
+  margin:12px 0 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="datetime-local"],
+textarea{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid rgba(181,142,80,.4);
+  border-radius:8px;
+  font-family:inherit;
+  font-size:16px;
+  background:#fffefb;
+  color:var(--brown);
+}
+
+textarea{ resize:vertical; min-height:56px; }
+
+.row2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.item-card{
+  border:1px dashed rgba(181,142,80,.5);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-top:12px;
+  position:relative;
+}
+
+.item-card .remove-btn{
+  position:absolute;
+  top:8px;
+  right:8px;
+  border:none;
+  background:#c97b92;
+  color:#fff;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:14px;
+  line-height:1;
+}
+
+.add-btn{
+  margin-top:14px;
+  border:1px solid var(--gold);
+  background:#fff;
+  color:#8c6a32;
+  padding:8px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:14px;
+}
+
+button.primary{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:50px;
+  background:linear-gradient(135deg,#cba358,#a87c32);
+  color:#fff;
+  font-family:inherit;
+  font-size:17px;
+  cursor:pointer;
+  margin-top:6px;
+}
+
+button.primary:disabled{
+  opacity:.6;
+  cursor:default;
+}
+
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+#logout-btn{
+  border:1px solid rgba(181,142,80,.5);
+  background:#fff;
+  color:#8c6a32;
+  padding:6px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:13px;
+}
+
+#status{
+  margin-top:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  font-size:14px;
+  display:none;
+}
+
+#status.ok{
+  display:block;
+  background:#e8f3e6;
+  color:#2f6b30;
+}
+
+#status.err{
+  display:block;
+  background:#fbe7e7;
+  color:#a13a3a;
+}
+
+#error-msg{
+  color:#a13a3a;
+  font-size:13px;
+  margin-top:10px;
+  min-height:16px;
+}
+
+#app-section{ display:none; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- LOGIN -->
+  <div id="login-box">
+    <h2>Admin Girişi</h2>
+    <label for="email">E-poçt</label>
+    <input type="email" id="email" autocomplete="username">
+    <label for="password">Şifrə</label>
+    <input type="password" id="password" autocomplete="current-password">
+    <button class="primary" id="login-btn" style="margin-top:18px;">Daxil ol</button>
+    <div id="error-msg"></div>
+  </div>
+
+  <!-- ADMIN FORM -->
+  <div id="app-section">
+
+    <div class="top-bar">
+      <div>
+        <h1>Dəvətnamə Admin Paneli</h1>
+        <p class="sub" id="auth-status">Yoxlanılır...</p>
+        <p class="sub" id="load-status"></p>
+      </div>
+      <button id="logout-btn">Çıxış</button>
+    </div>
+
+    <form id="edit-form">
+
+      <fieldset>
+        <legend>Cütlük</legend>
+        <label>Üst yazı (kicker)</label>
+        <input type="text" data-path="couple.kicker">
+        <label>Skript mətn (Hörmətlə)</label>
+        <input type="text" data-path="couple.scriptTop">
+        <div class="row2">
+          <div>
+            <label>Bəyin adı</label>
+            <input type="text" data-path="couple.groom">
+          </div>
+          <div>
+            <label>Gəlinin adı</label>
+            <input type="text" data-path="couple.bride">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tarix</legend>
+        <label>Tarix və saat (ISO)</label>
+        <input type="datetime-local" data-path="date.iso">
+        <div class="row2">
+          <div>
+            <label>Gün</label>
+            <input type="text" data-path="date.day">
+          </div>
+          <div>
+            <label>Ay (mətn)</label>
+            <input type="text" data-path="date.month">
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label>İl</label>
+            <input type="text" data-path="date.year">
+          </div>
+          <div>
+            <label>Həftənin günü</label>
+            <input type="text" data-path="date.weekday">
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label>Saat (mətn)</label>
+            <input type="text" data-path="date.time">
+          </div>
+          <div>
+            <label>Məkan (qısa)</label>
+            <input type="text" data-path="date.locationShort">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Media (Storage URL-ləri)</legend>
+        <label>Açılış şəkli URL</label>
+        <input type="text" data-path="media.openingImage">
+        <label>Açılış videosu URL</label>
+        <input type="text" data-path="media.openingVideo">
+        <label>Hero video URL</label>
+        <input type="text" data-path="media.heroVideo">
+        <label>Musiqi (mp3) URL</label>
+        <input type="text" data-path="media.music">
+      </fieldset>
+
+      <fieldset>
+        <legend>Mərasim — başlıq</legend>
+        <label>Üst yazı</label>
+        <input type="text" data-path="ceremony.kicker">
+        <label>Başlıq</label>
+        <input type="text" data-path="ceremony.title">
+        <label>Sonluq cümləsi</label>
+        <input type="text" data-path="ceremony.closingLine">
+      </fieldset>
+
+      <fieldset>
+        <legend>Mərasim — məlumat kartları</legend>
+        <div id="info-cards-list"></div>
+        <button type="button" class="add-btn" id="add-info-card">+ Kart əlavə et</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Mərasim — proqram</legend>
+        <div id="program-list"></div>
+        <button type="button" class="add-btn" id="add-program-item">+ Maddə əlavə et</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>RSVP</legend>
+        <label>Son tarix yazısı</label>
+        <input type="text" data-path="rsvp.deadlineLabel">
+        <label>Başlıq</label>
+        <input type="text" data-path="rsvp.title">
+        <label>Sual mətni</label>
+        <textarea data-path="rsvp.question"></textarea>
+        <label>WhatsApp nömrəsi (994... formatında)</label>
+        <input type="text" data-path="rsvp.whatsappNumber">
+        <div class="row2">
+          <div>
+            <label>"Bəli" düyməsi</label>
+            <input type="text" data-path="rsvp.yesLabel">
+          </div>
+          <div>
+            <label>"Xeyr" düyməsi</label>
+            <input type="text" data-path="rsvp.noLabel">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Məkan</legend>
+        <label>Üst yazı</label>
+        <input type="text" data-path="map.eyebrow">
+        <label>Başlıq</label>
+        <input type="text" data-path="map.title">
+        <label>Google Maps linki</label>
+        <input type="text" data-path="map.url">
+      </fieldset>
+
+      <fieldset>
+        <legend>Footer</legend>
+        <label>Skript mətn</label>
+        <input type="text" data-path="footer.script">
+      </fieldset>
+
+      <button type="submit" class="primary" id="save-btn">Yadda saxla</button>
+
+      <div id="status"></div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>

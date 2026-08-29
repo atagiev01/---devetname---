@@ -1,0 +1,89 @@
+// =========================================================
+// DEFOLT DATA
+// Firestore-dan cavab gələnə qədər (və ya xəta olarsa)
+// göstərilən ehtiyat məlumat. Strukturu Firestore sənədi
+// ilə eynidir — bax: data/firestore-document.json
+// =========================================================
+
+export const DEFAULT_DATA = {
+
+  couple: {
+    kicker: "TOYUMUZA DƏVƏTLİSİNİZ",
+    scriptTop: "Hörmətlə",
+    groom: "Asim",
+    bride: "Sevinc"
+  },
+
+  date: {
+    iso: "2026-09-12T19:00:00",
+    day: "12",
+    month: "SENTYABR",
+    year: "2026",
+    weekday: "ŞƏNBƏ",
+    time: "19:00",
+    locationShort: "Bakı"
+  },
+
+  media: {
+    openingImage: "/acilmamis_devetname.png",
+    openingVideo: "/presentational-3 kopyası.mov",
+    heroVideo: "/hero-video-BkP1eoiB.mp4",
+    music: "/i.mp3"
+  },
+
+  ceremony: {
+    kicker: "MƏRASİM MƏLUMATLARI",
+    title: "Mərasim Axışı",
+    infoCards: [
+      { label: "TARİX", value: "12 Sentyabr 2026" },
+      { label: "SAAT", value: "19:00" }
+    ],
+    program: [
+      {
+        time: "18:00",
+        roman: "I",
+        title: "Qonaqların Qarşılanması",
+        desc: "Canlı musiqi, xoş ovqat və xüsusi ikramlarla qonaqlarımızın qarşılanması."
+      },
+      {
+        time: "19:00",
+        roman: "II",
+        title: "Gəlin və Bəyin Gəlişi",
+        desc: "Təntənəli giriş və gecənin ilk romantik rəqsi."
+      },
+      {
+        time: "20:30",
+        roman: "III",
+        title: "Musiqi və Şou Proqramı",
+        desc: "Canlı ifalar, sənətçi çıxışları və möhtəşəm rəqs şouları."
+      },
+      {
+        time: "22:30",
+        roman: "IV",
+        title: "Toy Tortunun Kəsilməsi",
+        desc: "Gecənin ən şirin anı və möhtəşəm atəşfəşanlıq mərasimi."
+      }
+    ],
+    closingLine: "Sevincimizi sizinlə bölüşməkdən xoşbəxtik"
+  },
+
+  rsvp: {
+    deadlineLabel: "Son tarix: 1 Sentyabr 2026",
+    title: "İştirakınızı təsdiqləyin",
+    question: "Əziz qonağımız, toyumuzda iştirakınızı bizimlə bölüşün.",
+    whatsappNumber: "994556519390",
+    yesLabel: "Bəli, iştirak edəcəyəm",
+    noLabel: "Xeyr, iştirak edə bilməyəcəyəm"
+  },
+
+  map: {
+    eyebrow: "Tədbirin təfərrüatları",
+    title: "Harada",
+    url: "https://maps.app.goo.gl/vUBL42XFUGrSZr2e8"
+  },
+
+  footer: {
+    script: "Görüşənədək"
+  }
+
+};
